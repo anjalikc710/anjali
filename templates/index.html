@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,4 +21,28 @@
         {% endfor %}
     </ul>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Flask & SQLite</title>
+</head>
+<body>
+    <h1>User List</h1>
+    <img src="{{ url_for('static', filename='images/default.png') }}" alt="Default User" width="150">
+
+    <form action="/add" method="POST">
+        <input type="text" name="name" placeholder="Enter Name" required>
+        <input type="email" name="email" placeholder="Enter Email" required>
+        <button type="submit">Add User</button>
+    </form>
+
+    <h2>Users:</h2>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.name }} - {{ user.email }}</li>
+        {% endfor %}
+    </ul>
+</body>
+>>>>>>> 880cd596cc6f9827824b3d8942ca8476df6be254
 </html>
