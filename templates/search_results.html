@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Search Results for "{{ query }}"</h2>
+
+<div class="row">
+{% if jobs %}
+    {% for job in jobs %}
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>{{ job.title }}</h5>
+                <p><strong>{{ job.company }}</strong> - {{ job.location }}</p>
+                <a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No jobs found matching your search.</p>
+{% endif %}
+</div>
+
+<a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Back to All Jobs</a>
+{% endblock %}
