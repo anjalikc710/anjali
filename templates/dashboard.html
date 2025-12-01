@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Welcome, {{ current_user.username }}</h3>
+<ul class="list-group mb-4">
+{% for job in jobs %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+<span><b>{{ job.title }}</b> - {{ job.company }} ({{ job.location }})</span>
+<small class="text-muted">Posted on: {{ job.posted_on.strftime('%Y-%m-%d') }}</small>
+<a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-sm btn-outline-primary">Apply</a>
+</li>
+{% endfor %}
+</ul>
+<h5>Your Applications</h5>
+<ul class="list-group">
+{% for app in applications %}
+<li class="list-group-item">
+Applied for Job ID: {{ app.job_id }} on {{ app.applied_on.strftime('%Y-%m-%d') }}
+</li>
+{% else %}
+<li class="list-group-item">No applications yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}

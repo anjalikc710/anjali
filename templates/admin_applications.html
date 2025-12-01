@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>All Job Applications</h3>
+<table class="table table-bordered table-striped mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Applicant</th>
+            <th>Email</th>
+            <th>Job Applied</th>
+            <th>Resume</th>
+            <th>Applied On</th>
+            <th>Status</th> <!-- New column -->
+            <th>Action</th> <!-- New column for marking reviewed -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ app.applicant_name }}</td>
+            <td>{{ app.applicant_email }}</td>
+            <td>{{ app.job_title }}</td>
+            <td>
+                <a href="{{ url_for('uploaded_file', filename=app.resume) }}" class="btn btn-sm btn-primary" target="_blank">
+                    Download
+                </a>
+            </td>
+            <td>{{ app.applied_on.strftime('%Y-%m-%d') }}</td>
+            <td>
+                {% if app.reviewed %}
+                    <span class="badge bg-success">Reviewed</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if not app.reviewed %}
+                <form action="{{ url_for('review_application', app_id=app.id) }}" method="POST" style="display:inline-block;">
+                    <button class="btn btn-sm btn-success" type="submit">Mark Reviewed</button>
+                </form>
+                {% else %}
+                <span class="text-muted">—</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="8" class="text-center">No applications found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
